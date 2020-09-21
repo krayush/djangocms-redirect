@@ -1,5 +1,5 @@
 =============================
-djangocms-redirect
+djangocms-redirect (With dynamic SIDE_ID support)
 =============================
 
 .. image:: https://img.shields.io/pypi/v/djangocms-redirect.svg?style=flat-square
