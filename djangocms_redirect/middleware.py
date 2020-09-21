@@ -12,7 +12,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Q
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.http import urlunquote_plus
-
+from django.contrib.sites.models import Site
 from .models import Redirect
 from .utils import get_key_from_path_and_site
 
@@ -66,8 +66,12 @@ class RedirectMiddleware(MiddlewareMixin):
                     r = self._match_substring(path)
                     if r:
                         break
+            try:
+                current_site = Site.objects.get(domain='press.test-domain.com')	
+            except Site.DoesNotExist:	
+                current_site = Site.objects.get(id=settings.DEFAULT_SIDE_ID)
             cached_redirect = {
-                'site': settings.SITE_ID,
+                'site': current_site,
                 'redirect': r.new_path if r else None,
                 'status_code': r.response_code if r else None,
             }
